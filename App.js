@@ -17,6 +17,7 @@ import PendingStack from "./screens/PendingStack";
 import AcceptedScreen from "./screens/AcceptedScreen";
 import DeclinedScreen from "./screens/DeclinedScreen";
 import AcceptedOuterStack from "./screens/AcceptedOuterStack";
+import DeclinedOuterStack from "./screens/DeclinedOuterStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -26,7 +27,7 @@ export default function App() {
       <Tab.Navigator>
         <Tab.Screen name="Pending Main" component={PendingOuterStack} screenOptions={{ headerShown: false, title: '', }}/>
         <Tab.Screen name="Accepted Main" component={AcceptedOuterStack} screenOptions={{ headerShown: false, title: '', }}/>
-        <Tab.Screen name="Declined" component={DeclinedScreen} screenOptions={{ headerShown: false }}/>
+        <Tab.Screen name="Declined Main" component={DeclinedOuterStack} screenOptions={{ headerShown: false, title: '', }}/>
       </Tab.Navigator>
     </NavigationContainer>
   );
