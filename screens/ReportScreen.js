@@ -227,5 +227,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#E9E9E9",
     padding: 3,
     marginLeft: 20,
+    marginRight: 20,
   },
 });
