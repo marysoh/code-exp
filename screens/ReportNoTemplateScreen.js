@@ -66,11 +66,11 @@ import DatePicker from "react-native-datepicker";
 
         <ScrollView style= {styles.container}>
         <Text style={styles.text}>Title:</Text>
-        <TextInput placeholder="Title" onChangeText={onChangeField('title')} style={styles.textInput}/>
+        <TextInput placeholder="" onChangeText={onChangeField('title')} style={styles.textInput}/>
         <Text style={styles.text}>Date and Time of Incident:</Text>
         <TextInput placeholder="DD/MM/YYYY HHMM" onChangeText={onChangeField('date')} style={styles.textInput}/>
         <Text style={styles.text}>Enter Report:</Text>
-        <TextInput placeholder="Enter Report Here" onChangeText={onChangeField('reportText')} style={styles.textInput}/>
+        <TextInput placeholder="" onChangeText={onChangeField('reportText')} style={styles.textInput}/>
         <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>
                 <Text style={styles.buttonText}>Submit</Text>
@@ -87,7 +87,8 @@ import DatePicker from "react-native-datepicker";
   const styles =StyleSheet.create({
     container:{
         flex: 1,
-        marginTop:40,
+        marginTop: 40,
+        marginBottom: 50,
     },
     buttonContainer:{
       flexDirection: 'row',
@@ -114,6 +115,11 @@ import DatePicker from "react-native-datepicker";
     },
 
     textInput:{
+        borderWidth: 2,
+        borderColor: "grey",
+        backgroundColor: "#E9E9E9",
+        padding: 3,
         marginLeft: 20,
+        marginRight: 20,
     }
 })
