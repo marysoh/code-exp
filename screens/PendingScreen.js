@@ -75,7 +75,7 @@ export default function PendingScreen({ navigation, route }) {
         if(route.params?.title){
             console.log("test");
             if(route.params.template)
-            {   const {title, date, template, incident, servicemen} = route.params;
+            {   const {title, date, template, incident, servicemen,unitCompany, location, description, injury, actions, verbalReport, writtenReport, reportedTime, officer} = route.params;
             
                 const newNote={
                     title: title,
@@ -83,7 +83,15 @@ export default function PendingScreen({ navigation, route }) {
                     template: template,
                     incident: incident,
                     servicemen: servicemen,
-                    // reportText: '',
+                    unitCompany: unitCompany,
+                    location: location,
+                    description: description,
+                    injury: injury,
+                    actions: actions,
+                    verbalReport: verbalReport,
+                    writtenReport: writtenReport,
+                    reportedTime: reportedTime,
+                    officer: officer,
                     status: 'pending',
                     id: notes.length.toString(),
                 };
@@ -146,7 +154,17 @@ export default function PendingScreen({ navigation, route }) {
           {/* {console.log(item.title)} */}
           <TouchableOpacity onPress={()=>{
               if(item.template){
-                  navigation.navigate("View Report", {title: item.title, date: item.date, template: item.template, status: item.status});
+                  navigation.navigate("View Report", {title: item.title, date: item.date, template: item.template, status: item.status, incident: item.incident,
+                    servicemen: item.servicemen,
+                    unitCompany: item.unitCompany,
+                    location: item.location,
+                    description: item.description,
+                    injury: item.injury,
+                    actions: item.actions,
+                    verbalReport: item.verbalReport,
+                    writtenReport: item.writtenReport,
+                    reportedTime: item.reportedTime,
+                    officer: item.officer,});
               }
               else{
                 navigation.navigate("View Report", {title: item.title, date: item.date, template: item.template, reportText: item.reportText, status: item.status});

@@ -13,98 +13,119 @@ import { createStackNavigator } from "@react-navigation/stack";
 import React, { useEffect, useState } from "react";
 import { Entypo } from "@expo/vector-icons";
 
-export default function ViewReportScreen({navigation, route}){
-    function withTemplate(){
-        return(
-        <View>
-            <Text style={styles.text}>Type of Incident: </Text>
-            <Text style={styles.content}>placeholder </Text>
-            <Text style={styles.text}>Servicemen Involved: </Text>
-            <Text style={styles.content}>placeholder </Text>
-            <Text style={styles.text}>Serviceman Unit and Company: </Text>
-            <Text style={styles.content}>placeholder </Text>
-            <Text style={styles.text}>Location of Incident: </Text>
-            <Text style={styles.content}>placeholder </Text>
-            <Text style={styles.text}>Brief Description of Incidents: </Text>
-            <Text style={styles.content}>placeholder </Text>
-            <Text style={styles.text}>Injury/Damages: </Text>
-            <Text style={styles.content}>placeholder </Text>
-            <Text style={styles.text}>Follow-up Actions: </Text>
-            <Text style={styles.content}>placeholder </Text>
-            <Text style={styles.text}>Date/Time of Verbal Report to GSOC: </Text>
-            <Text style={styles.content}>placeholder </Text>
-            <Text style={styles.text}>Date/Time of Written Report or submission of eSASH to GSOC: </Text>
-            <Text style={styles.content}>placeholder </Text>
-            <Text style={styles.text}>Date/Time reported to  DIV/HQ Armr: </Text>
-            <Text style={styles.content}>placeholder </Text>
-            <Text style={styles.text}>Unit Reporting Officer: </Text>
-            <Text style={styles.content}>placeholder </Text>
-        </View>
-        )
-    }
-
-    function withoutTemplate(){
-        return(
-        <View>
-            <Text style={styles.text}>Report: </Text>
-            <Text style={styles.content}>{route.params.reportText} </Text>
-        </View>
-        )
-        
-    }
-
-    function goToFormat(){
-        console.log("yes");
-        console.log(route.params);
-        if(route.params.template === true){
-            console.log("hi");
-            return(withTemplate());
-        }
-        else{
-            console.log("bye");
-            return(withoutTemplate());
-        }
-    }
-
-    function remarks(){
-        if(route.params.status !== 'pending'){
-            return(
-                <View>
-                    <Text style={styles.text}>Remarks:</Text>
-                    <Text style={styles.content}>{route.params.remarks}</Text>
-                </View>
-            )
-        }
-        else{
-            return(
-                <View>
-                    <Text style={styles.text}>Pending Approval</Text>
-                </View>
-            )
-        }
-    }
-
-    return(
-    <ScrollView>
-        {console.log(route)}
-        {console.log(route.params.date)}
-        <Text style={styles.text}>Title: </Text>
-        <Text style={styles.content}>{route.params.title} </Text>
-        <Text style={styles.text}>Date and Time of Incident DTG: </Text>
-        <Text style={styles.content}>{route.params.date} </Text>
-        {goToFormat()}
-        {remarks()}
-    </ScrollView>
+export default function ViewReportScreen({ navigation, route }) {
+  function withTemplate() {
+    const {
+      incident,
+      servicemen,
+      unitCompany,
+      location,
+      description,
+      injury,
+      actions,
+      verbalReport,
+      writtenReport,
+      reportedTime,
+      officer,
+    } = route.params;
+    return (
+      <View>
+        <Text style={styles.text}>Type of Incident: </Text>
+        <Text style={styles.content}> {incident}</Text>
+        <Text style={styles.text}>Servicemen Involved: </Text>
+        <Text style={styles.content}>{servicemen} </Text>
+        <Text style={styles.text}>Serviceman Unit and Company: </Text>
+        <Text style={styles.content}>{unitCompany} </Text>
+        <Text style={styles.text}>Location of Incident: </Text>
+        <Text style={styles.content}>{location} </Text>
+        <Text style={styles.text}>Brief Description of Incidents: </Text>
+        <Text style={styles.content}>{description} </Text>
+        <Text style={styles.text}>Injury/Damages: </Text>
+        <Text style={styles.content}>{injury} </Text>
+        <Text style={styles.text}>Follow-up Actions: </Text>
+        <Text style={styles.content}>{actions} </Text>
+        <Text style={styles.text}>Date/Time of Verbal Report to GSOC: </Text>
+        <Text style={styles.content}>{verbalReport} </Text>
+        <Text style={styles.text}>
+          Date/Time of Written Report or submission of eSASH to GSOC:{" "}
+        </Text>
+        <Text style={styles.content}>{writtenReport} </Text>
+        <Text style={styles.text}>Date/Time reported to DIV/HQ Armr: </Text>
+        <Text style={styles.content}>{reportedTime} </Text>
+        <Text style={styles.text}>Unit Reporting Officer: </Text>
+        <Text style={styles.content}>{officer} </Text>
+      </View>
     );
+  }
+
+  function withoutTemplate() {
+    return (
+      <View>
+        <Text style={styles.text}>Report: </Text>
+        <Text style={styles.content}>{route.params.reportText} </Text>
+      </View>
+    );
+  }
+
+  function goToFormat() {
+    console.log("yes");
+    console.log(route.params);
+    if (route.params.template === true) {
+      console.log("hi");
+      return withTemplate();
+    } else {
+      console.log("bye");
+      return withoutTemplate();
+    }
+  }
+
+  function remarks() {
+    if (route.params.status !== "pending") {
+      return (
+        <View>
+          <Text style={styles.text}>Remarks:</Text>
+          <Text style={styles.content}>{route.params.remarks}</Text>
+        </View>
+      );
+    } else {
+      return (
+        <View>
+          <Text
+            style={{ fontWeight: "bold", padding: 20, textAlign: "center" }}
+          >
+            Pending Approval
+          </Text>
+        </View>
+      );
+    }
+  }
+
+  return (
+    <ScrollView style={styles.container}>
+      {console.log(route)}
+      {console.log(route.params.date)}
+      <Text style={styles.text}>Title: </Text>
+      <Text style={styles.content}>{route.params.title} </Text>
+      <Text style={styles.text}>Date and Time of Incident DTG: </Text>
+      <Text style={styles.content}>{route.params.date} </Text>
+      {goToFormat()}
+      {remarks()}
+    </ScrollView>
+  );
 }
 
 const styles = StyleSheet.create({
-    text: {
-        fontWeight: 'bold',
-        padding: 20,
-    },
+  text: {
+    fontWeight: "bold",
+    padding: 20,
+  },
 
-    content:{
-        marginLeft:40,
-    }
-})
+  content: {
+    marginLeft: 40,
+  },
+
+  container: {
+    marginTop: 30,
+    marginBottom: 50,
+  },
+});

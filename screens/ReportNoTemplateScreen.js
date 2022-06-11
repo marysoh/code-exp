@@ -67,8 +67,8 @@ import DatePicker from "react-native-datepicker";
         <ScrollView style= {styles.container}>
         <Text style={styles.text}>Title:</Text>
         <TextInput placeholder="Title" onChangeText={onChangeField('title')} style={styles.textInput}/>
-        <Text style={styles.text}>Date of Incident:</Text>
-        <TextInput placeholder="DD/MM/YYYY" onChangeText={onChangeField('date')} style={styles.textInput}/>
+        <Text style={styles.text}>Date and Time of Incident:</Text>
+        <TextInput placeholder="DD/MM/YYYY HHMM" onChangeText={onChangeField('date')} style={styles.textInput}/>
         <Text style={styles.text}>Enter Report:</Text>
         <TextInput placeholder="Enter Report Here" onChangeText={onChangeField('reportText')} style={styles.textInput}/>
         <View style={styles.buttonContainer}>
