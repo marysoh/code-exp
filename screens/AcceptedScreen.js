@@ -21,6 +21,8 @@ export default function AcceptedScreen({navigation}){
         [{title:"Absence of Serviceman",
         date: "12/03/2022",
         template: false,
+        status:'accepted',
+        remarks: 'NIL',
         reportText: "Full report",
 },]);
 
@@ -35,10 +37,10 @@ export default function AcceptedScreen({navigation}){
             {console.log(item)}
             <TouchableOpacity onPress={()=>{
                 if(item.template){
-                    navigation.navigate("View Report2", {title: item.title, date: item.date, template: item.template});
+                    navigation.navigate("View Report2", {title: item.title, date: item.date, template: item.template, status: item.status, remarks: item.remarks});
                 }
                 else{
-                  navigation.navigate("View Report2", {title: item.title, date: item.date, template: item.template, reportText: item.reportText});
+                  navigation.navigate("View Report2", {title: item.title, date: item.date, template: item.template, reportText: item.reportText, status: item.status, remarks: item.remarks});
                 }
                 }}>
                 <Text style={{fontSize: 12, fontWeight: 'bold', textAlign: 'left', }}>{item.date}</Text>

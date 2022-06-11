@@ -21,6 +21,8 @@ export default function DeclinedScreen({navigation}){
         [{title:"incident",
         date: "12/03/2022",
         template: false,
+        status: 'declined',
+        remarks: 'Need more info',
         reportText: "Full report",
 },]);
     function viewReport(){
@@ -38,10 +40,10 @@ export default function DeclinedScreen({navigation}){
             {/* {console.log(item.title)} */}
             <TouchableOpacity onPress={()=>{
                 if(item.template){
-                    navigation.navigate("View Report3", {title: item.title, date: item.date, template: item.template});
+                    navigation.navigate("View Report3", {title: item.title, date: item.date, template: item.template, status: item.status, remarks: item.remarks});
                 }
                 else{
-                  navigation.navigate("View Report3", {title: item.title, date: item.date, template: item.template, reportText: item.reportText});
+                  navigation.navigate("View Report3", {title: item.title, date: item.date, template: item.template, reportText: item.reportText, status: item.status, remarks: item.remarks});
                 }
                 }}>
                 <Text style={{fontSize: 12, fontWeight: 'bold', textAlign: 'left', }}>{item.date}</Text>

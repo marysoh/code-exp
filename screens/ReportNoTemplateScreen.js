@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   TextInput,
   Button,
+  ScrollView,
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -63,7 +64,7 @@ import DatePicker from "react-native-datepicker";
         //     <input type="submit" />
         // </form>
 
-        <View style= {styles.container}>
+        <ScrollView style= {styles.container}>
         <Text style={styles.text}>Title:</Text>
         <TextInput placeholder="Title" onChangeText={onChangeField('title')} style={styles.textInput}/>
         <Text style={styles.text}>Date of Incident:</Text>
@@ -79,7 +80,7 @@ import DatePicker from "react-native-datepicker";
             </TouchableOpacity>
         </View>
         
-    </View>
+    </ScrollView>
         )
   }
 

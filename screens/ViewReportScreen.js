@@ -66,6 +66,24 @@ export default function ViewReportScreen({navigation, route}){
         }
     }
 
+    function remarks(){
+        if(route.params.status !== 'pending'){
+            return(
+                <View>
+                    <Text style={styles.text}>Remarks:</Text>
+                    <Text style={styles.content}>{route.params.remarks}</Text>
+                </View>
+            )
+        }
+        else{
+            return(
+                <View>
+                    <Text style={styles.text}>Pending Approval</Text>
+                </View>
+            )
+        }
+    }
+
     return(
     <ScrollView>
         {console.log(route)}
@@ -75,6 +93,7 @@ export default function ViewReportScreen({navigation, route}){
         <Text style={styles.text}>Date and Time of Incident DTG: </Text>
         <Text style={styles.content}>{route.params.date} </Text>
         {goToFormat()}
+        {remarks()}
     </ScrollView>
     );
 }

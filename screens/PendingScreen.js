@@ -146,10 +146,10 @@ export default function PendingScreen({ navigation, route }) {
           {/* {console.log(item.title)} */}
           <TouchableOpacity onPress={()=>{
               if(item.template){
-                  navigation.navigate("View Report", {title: item.title, date: item.date, template: item.template});
+                  navigation.navigate("View Report", {title: item.title, date: item.date, template: item.template, status: item.status});
               }
               else{
-                navigation.navigate("View Report", {title: item.title, date: item.date, template: item.template, reportText: item.reportText});
+                navigation.navigate("View Report", {title: item.title, date: item.date, template: item.template, reportText: item.reportText, status: item.status});
               }
                 
                 }}>
