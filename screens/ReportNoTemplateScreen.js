@@ -20,7 +20,7 @@ import DatePicker from "react-native-datepicker";
       const onSubmit = useCallback(
           formData => {
               console.log("in on submit", formData);
-              navigation.navigate("Pending", {title: formData.title, date: formData.date});
+              navigation.navigate("Pending", {title: formData.title, date: formData.date, template: false});
             }, []
       )
 

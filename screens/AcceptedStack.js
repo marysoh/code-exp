@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import PendingScreen from './PendingScreen';
@@ -20,15 +21,15 @@ export default function AcceptedStack(){
       name="Accepted" 
       component = {AcceptedScreen} 
       options={{
-        title: "Approved",
+        title: "Accepted",
         headerTitleStyle: {
           fontWeight: "bold",
           fontSize: 24,
         },
         headerTitleAlign: "center",
         headerStyle: {
-          backgroundColor: "#B7CADB",
-          height: 75,
+          backgroundColor: "#A0B9BF",
+          height: 90,
           borderBottomColor: "grey",
           borderBottomWidth: 2,
         },

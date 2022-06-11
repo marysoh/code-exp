@@ -18,14 +18,10 @@ import { Entypo } from "@expo/vector-icons";
 
 export default function AcceptedScreen({navigation}){
     const [notes, setNotes] = useState(
-        [{title:"incident",
+        [{title:"Absence of Serviceman",
         date: "12/03/2022",
 },]);
-    function viewReport({item}){
-        
-        console.log(item);
-        
-    }
+
 
     function renderItem({item}){
         return(
@@ -36,12 +32,10 @@ export default function AcceptedScreen({navigation}){
             borderBottomWidth:2}}>
             {console.log(item)}
             <TouchableOpacity onPress={()=>{
-                console.log("hiii");
-                console.log(item);
                 navigation.navigate("View Report2", {title: item.title, date: item.date,});
                 }}>
-                <Text style={{fontSize: 10, textAlign: 'left', }}>{item.date}</Text>
-                <Text style={{fontSize:16, textAlign: 'left', marginLeft: 20, padding: 5}}>{item.title}</Text>
+                <Text style={{fontSize: 12, fontWeight: 'bold', textAlign: 'left', }}>{item.date}</Text>
+                <Text style={{fontSize:18, textAlign: 'left', marginLeft: 20, padding: 5}}>{item.title}</Text>
                 </TouchableOpacity>
         </View>
         

@@ -28,8 +28,8 @@ export default function DeclinedStack(){
         },
         headerTitleAlign: "center",
         headerStyle: {
-          backgroundColor: "#B7CADB",
-          height: 75,
+          backgroundColor: "#A0B9BF",
+          height: 90,
           borderBottomColor: "grey",
           borderBottomWidth: 2,
         },

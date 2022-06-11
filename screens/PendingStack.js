@@ -19,15 +19,15 @@ export default function PendingStack(){
       name="Pending" 
       component = {PendingScreen} 
       options={{
-        title: "NS app",
+        title: "Pending",
         headerTitleStyle: {
           fontWeight: "bold",
           fontSize: 24,
         },
         headerTitleAlign: "center",
         headerStyle: {
-          backgroundColor: "#B7CADB",
-          height: 75,
+          backgroundColor: "#A0B9BF",
+          height: 90,
           borderBottomColor: "grey",
           borderBottomWidth: 2,
         },

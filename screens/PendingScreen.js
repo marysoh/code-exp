@@ -70,7 +70,8 @@ export default function PendingScreen({ navigation, route }) {
 
     useEffect(()=> 
     {
-        // console.log("helloooo");
+        console.log("helloooo");
+        console.log(route);
         if(route.params?.title){
             
             const {title, date} = route.params;
@@ -78,6 +79,7 @@ export default function PendingScreen({ navigation, route }) {
             const newNote={
                 title: title,
                 date: date,
+                template: true,
                 id: notes.length.toString(),
             };
             setNotes([...notes, newNote]);
@@ -93,7 +95,7 @@ export default function PendingScreen({ navigation, route }) {
           <TouchableOpacity
             onPress={addTemplateReport}
           >
-            <Ionicons name="document-text-outline" size={24} color="black" style={{marginRight:12}} />
+            <Ionicons name="document-text-outline" size={28} color="black" style={{marginRight:12}} />
           </TouchableOpacity>
         ),
       });
@@ -106,7 +108,7 @@ export default function PendingScreen({ navigation, route }) {
             <TouchableOpacity
               onPress={addNoTemplateReport}
             >
-              <Ionicons name="document-outline" size={24} color="black" style={{marginLeft: 12}}/>
+              <Ionicons name="document-outline" size={28} color="black" style={{marginLeft: 12}}/>
             </TouchableOpacity>
           ),
         });
