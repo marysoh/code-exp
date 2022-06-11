@@ -20,6 +20,8 @@ export default function AcceptedScreen({navigation}){
     const [notes, setNotes] = useState(
         [{title:"Absence of Serviceman",
         date: "12/03/2022",
+        template: false,
+        reportText: "Full report",
 },]);
 
 
@@ -32,7 +34,12 @@ export default function AcceptedScreen({navigation}){
             borderBottomWidth:2}}>
             {console.log(item)}
             <TouchableOpacity onPress={()=>{
-                navigation.navigate("View Report2", {title: item.title, date: item.date,});
+                if(item.template){
+                    navigation.navigate("View Report2", {title: item.title, date: item.date, template: item.template});
+                }
+                else{
+                  navigation.navigate("View Report2", {title: item.title, date: item.date, template: item.template, reportText: item.reportText});
+                }
                 }}>
                 <Text style={{fontSize: 12, fontWeight: 'bold', textAlign: 'left', }}>{item.date}</Text>
                 <Text style={{fontSize:18, textAlign: 'left', marginLeft: 20, padding: 5}}>{item.title}</Text>

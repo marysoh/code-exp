@@ -20,7 +20,7 @@ import DatePicker from "react-native-datepicker";
       const onSubmit = useCallback(
           formData => {
               console.log("in on submit", formData);
-              navigation.navigate("Pending", {title: formData.title, date: formData.date, template: false});
+              navigation.navigate("Pending", {title: formData.title, date: formData.date, template: false, reportText: formData.reportText});
             }, []
       )
 
@@ -63,34 +63,56 @@ import DatePicker from "react-native-datepicker";
         //     <input type="submit" />
         // </form>
 
-        <View>
-            <TextInput placeholder="Title" onChangeText={onChangeField('title')}/>
-            <TextInput placeholder="DD/MM/YYYY" onChangeText={onChangeField('date')}/>
-            <TextInput placeholder="Enter Report Here" onChangeText={onChangeField('reportText')} />
-            <Button title="Submit" onPress={handleSubmit(onSubmit)} />
-            <Button title="Cancel" onPress={() => navigation.goBack()} />
+        <View style= {styles.container}>
+        <Text style={styles.text}>Title:</Text>
+        <TextInput placeholder="Title" onChangeText={onChangeField('title')} style={styles.textInput}/>
+        <Text style={styles.text}>Date of Incident:</Text>
+        <TextInput placeholder="DD/MM/YYYY" onChangeText={onChangeField('date')} style={styles.textInput}/>
+        <Text style={styles.text}>Enter Report:</Text>
+        <TextInput placeholder="Enter Report Here" onChangeText={onChangeField('reportText')} style={styles.textInput}/>
+        <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>
+                <Text style={styles.buttonText}>Submit</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()} >
+                <Text style={styles.buttonText}>Cancel</Text>
+            </TouchableOpacity>
         </View>
+        
+    </View>
         )
   }
 
   const styles =StyleSheet.create({
-      container:{
-          flex: 1,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
+    container:{
+        flex: 1,
+        marginTop:40,
+    },
+    buttonContainer:{
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      margin:20,
+    },
+    button:{
+        fontWeight:'bold',
+        borderStyle:'solid',
+        backgroundColor: '#A0B9BF',
+        width:'40%',
+        height: 40,
+    },
+    buttonText:{
+        marginTop: 10,
+        marginLeft:50,
+        color:'black',
+        fontWeight: 'bold',
+    },
 
-      },
-      button:{
-          padding:20,
-          fontWeight:'bold',
-          borderStyle:'solid',
-          backgroundColor: 'green',
-          width:'40%',
-          height: 40,
-          marginLeft:30,
-          marginRight:30,
-      },
-      buttonText:{
-          color:'white',
-      },
-  })
+    text:{
+      fontWeight: 'bold',
+      padding:10,
+    },
+
+    textInput:{
+        marginLeft: 20,
+    }
+})

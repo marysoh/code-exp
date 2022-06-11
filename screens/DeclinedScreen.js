@@ -20,6 +20,8 @@ export default function DeclinedScreen({navigation}){
     const [notes, setNotes] = useState(
         [{title:"incident",
         date: "12/03/2022",
+        template: false,
+        reportText: "Full report",
 },]);
     function viewReport(){
         console.log("hiii");
@@ -35,12 +37,15 @@ export default function DeclinedScreen({navigation}){
             borderBottomWidth:2}}>
             {/* {console.log(item.title)} */}
             <TouchableOpacity onPress={()=>{
-                console.log("hiii");
-                console.log(item);
-                navigation.navigate("View Report3", {title: item.title, date: item.date,});
+                if(item.template){
+                    navigation.navigate("View Report3", {title: item.title, date: item.date, template: item.template});
+                }
+                else{
+                  navigation.navigate("View Report3", {title: item.title, date: item.date, template: item.template, reportText: item.reportText});
+                }
                 }}>
-                <Text style={{fontSize: 10, textAlign: 'left', }}>{item.date}</Text>
-                <Text style={{fontSize:16, textAlign: 'left', marginLeft: 20, padding: 5}}>{item.title}</Text>
+                <Text style={{fontSize: 12, fontWeight: 'bold', textAlign: 'left', }}>{item.date}</Text>
+                <Text style={{fontSize:18, textAlign: 'left', marginLeft: 20, padding: 5}}>{item.title}</Text>
                 </TouchableOpacity>
         </View>
         

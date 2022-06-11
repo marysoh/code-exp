@@ -73,18 +73,40 @@ export default function PendingScreen({ navigation, route }) {
         console.log("helloooo");
         console.log(route);
         if(route.params?.title){
+            console.log("test");
+            if(route.params.template)
+            {   const {title, date, template, incident, servicemen} = route.params;
             
-            const {title, date} = route.params;
+                const newNote={
+                    title: title,
+                    date: date,
+                    template: template,
+                    incident: incident,
+                    servicemen: servicemen,
+                    // reportText: '',
+                    status: 'pending',
+                    id: notes.length.toString(),
+                };
+                setNotes([...notes, newNote]);
+            }
+            else{
+                console.log("else");
+                const {title, date, template, reportText} = route.params;
+                console.log("try");
+                const newNote={
+                    title: title,
+                    date: date,
+                    template: template,
+                    reportText: reportText,
+                    status: 'pending',
+                    id: notes.length.toString(),
+                };
+                console.log("end else");
+                setNotes([...notes, newNote]);
+            }
             
-            const newNote={
-                title: title,
-                date: date,
-                template: true,
-                id: notes.length.toString(),
-            };
-            setNotes([...notes, newNote]);
         }
-        // console.log(notes);
+         console.log(notes);
     }, [route.params?.title])
 
     //This adds the new note button in header
@@ -123,7 +145,13 @@ export default function PendingScreen({ navigation, route }) {
           borderBottomWidth:2}}>
           {/* {console.log(item.title)} */}
           <TouchableOpacity onPress={()=>{
-                navigation.navigate("View Report", {title: item.title, date: item.date,});
+              if(item.template){
+                  navigation.navigate("View Report", {title: item.title, date: item.date, template: item.template});
+              }
+              else{
+                navigation.navigate("View Report", {title: item.title, date: item.date, template: item.template, reportText: item.reportText});
+              }
+                
                 }}>
               <Text style={{fontSize: 10, textAlign: 'left', }}>{item.date}</Text>
               <Text style={{fontSize:16, textAlign: 'left', marginLeft: 20, padding: 5}}>{item.title}</Text>

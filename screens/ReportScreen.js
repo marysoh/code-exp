@@ -21,7 +21,7 @@ import { Entypo } from "@expo/vector-icons";
       const onSubmit = useCallback(
           formData => {
               console.log("in on submit", formData);
-              navigation.navigate("Pending", {title: formData.title, date: formData.date, template:true});
+              navigation.navigate("Pending", {title: formData.title, date: formData.date, template:true, incident: formData.incident, servicemen: formData.servicemen});
             }, []
       )
 
@@ -33,6 +33,8 @@ import { Entypo } from "@expo/vector-icons";
       useEffect(() => {
           register('title');
           register('date');
+          register('incident');
+          register('servicemen');
       }, [register]);
         
       
@@ -68,6 +70,10 @@ import { Entypo } from "@expo/vector-icons";
             <TextInput placeholder="Title" onChangeText={onChangeField('title')} style={styles.textInput}/>
             <Text style={styles.text}>Date of Incident:</Text>
             <TextInput placeholder="DD/MM/YYYY" onChangeText={onChangeField('date')} style={styles.textInput}/>
+            <Text style={styles.text}>Type of Incident:</Text>
+            <TextInput placeholder="Type of Incident" onChangeText={onChangeField('incident')} style={styles.textInput}/>
+            <Text style={styles.text}>Servicemen involved:</Text>
+            <TextInput placeholder="Name of Servicemen" onChangeText={onChangeField('servicemen')} style={styles.textInput}/>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>
                     <Text style={styles.buttonText}>Submit</Text>
