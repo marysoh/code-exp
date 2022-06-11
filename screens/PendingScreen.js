@@ -11,6 +11,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import React, { useEffect, useState } from "react";
 import { Entypo } from "@expo/vector-icons";
+import { Ionicons } from '@expo/vector-icons'; 
 import ViewReportScreen from './ViewReportScreen';
 
 //const db = SQLite.openDatabase("notes.db");
@@ -55,9 +56,13 @@ export default function PendingScreen({ navigation, route }) {
     // }, []);
     // first param is if table doesnt exist, 2nd is if it fails, third is if it passes
 
-    function addReport() {
-      navigation.navigate("Add Report");
+    function addTemplateReport() {
+      navigation.navigate("Report Template");
     }
+
+    function addNoTemplateReport() {
+        navigation.navigate("Report No Template");
+      }
 
     function viewReport(){
         navigation.navigate("View Report");
@@ -86,18 +91,26 @@ export default function PendingScreen({ navigation, route }) {
       navigation.setOptions({
         headerRight: () => (
           <TouchableOpacity
-            onPress={addReport}
+            onPress={addTemplateReport}
           >
-            <Entypo
-              name="new-message"
-              size={24}
-              color="black"
-              style={{ marginRight: 12 }}
-            />
+            <Ionicons name="document-text-outline" size={24} color="black" style={{marginRight:12}} />
           </TouchableOpacity>
         ),
       });
     });
+
+    useEffect(() => {
+        console.log("3This effect happened");
+        navigation.setOptions({
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={addNoTemplateReport}
+            >
+              <Ionicons name="document-outline" size={24} color="black" style={{marginLeft: 12}}/>
+            </TouchableOpacity>
+          ),
+        });
+      });
   
     function renderItem({item}){
       return(
@@ -107,7 +120,9 @@ export default function PendingScreen({ navigation, route }) {
           borderBottomColor: 'grey', 
           borderBottomWidth:2}}>
           {/* {console.log(item.title)} */}
-          <TouchableOpacity onPress={viewReport}>
+          <TouchableOpacity onPress={()=>{
+                navigation.navigate("View Report", {title: item.title, date: item.date,});
+                }}>
               <Text style={{fontSize: 10, textAlign: 'left', }}>{item.date}</Text>
               <Text style={{fontSize:16, textAlign: 'left', marginLeft: 20, padding: 5}}>{item.title}</Text>
               </TouchableOpacity>

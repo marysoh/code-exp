@@ -12,10 +12,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 import React, { useEffect, useState, useCallback } from "react";
 import {useForm, Controller} from "react-hook-form";
 import DatePicker from "react-native-datepicker";
-import { Entypo } from "@expo/vector-icons";
   
 
-  export default function ReportScreen({navigation}){
+  export default function ReportNoTemplateScreen({navigation}){
       const {register, handleSubmit, setValue} = useForm();
 
       const onSubmit = useCallback(
@@ -33,6 +32,7 @@ import { Entypo } from "@expo/vector-icons";
       useEffect(() => {
           register('title');
           register('date');
+          register('reportText');
       }, [register]);
         
       
@@ -66,6 +66,7 @@ import { Entypo } from "@expo/vector-icons";
         <View>
             <TextInput placeholder="Title" onChangeText={onChangeField('title')}/>
             <TextInput placeholder="DD/MM/YYYY" onChangeText={onChangeField('date')}/>
+            <TextInput placeholder="Enter Report Here" onChangeText={onChangeField('reportText')} />
             <Button title="Submit" onPress={handleSubmit(onSubmit)} />
             <Button title="Cancel" onPress={() => navigation.goBack()} />
         </View>

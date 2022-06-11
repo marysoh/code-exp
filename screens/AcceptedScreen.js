@@ -21,9 +21,10 @@ export default function AcceptedScreen({navigation}){
         [{title:"incident",
         date: "12/03/2022",
 },]);
-    function viewReport(){
-        console.log("hiii");
-        navigation.navigate("View Report2");
+    function viewReport({item}){
+        
+        console.log(item);
+        
     }
 
     function renderItem({item}){
@@ -33,8 +34,12 @@ export default function AcceptedScreen({navigation}){
             padding:10, 
             borderBottomColor: 'grey', 
             borderBottomWidth:2}}>
-            {/* {console.log(item.title)} */}
-            <TouchableOpacity onPress={viewReport}>
+            {console.log(item)}
+            <TouchableOpacity onPress={()=>{
+                console.log("hiii");
+                console.log(item);
+                navigation.navigate("View Report2", {title: item.title, date: item.date,});
+                }}>
                 <Text style={{fontSize: 10, textAlign: 'left', }}>{item.date}</Text>
                 <Text style={{fontSize:16, textAlign: 'left', marginLeft: 20, padding: 5}}>{item.title}</Text>
                 </TouchableOpacity>

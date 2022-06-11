@@ -34,7 +34,11 @@ export default function DeclinedScreen({navigation}){
             borderBottomColor: 'grey', 
             borderBottomWidth:2}}>
             {/* {console.log(item.title)} */}
-            <TouchableOpacity onPress={viewReport}>
+            <TouchableOpacity onPress={()=>{
+                console.log("hiii");
+                console.log(item);
+                navigation.navigate("View Report3", {title: item.title, date: item.date,});
+                }}>
                 <Text style={{fontSize: 10, textAlign: 'left', }}>{item.date}</Text>
                 <Text style={{fontSize:16, textAlign: 'left', marginLeft: 20, padding: 5}}>{item.title}</Text>
                 </TouchableOpacity>

@@ -13,11 +13,15 @@ import { createStackNavigator } from "@react-navigation/stack";
 import React, { useEffect, useState } from "react";
 import { Entypo } from "@expo/vector-icons";
 
-export default function ViewReportScreen(){
+export default function ViewReportScreen({navigation, route}){
     return(
     <ScrollView>
+        {console.log(route)}
+        {console.log(route.params.date)}
+        <Text style={styles.text}>Title: </Text>
+        <Text style={styles.content}>{route.params.title} </Text>
         <Text style={styles.text}>Date of Incident: </Text>
-        <Text style={styles.content}>placeholder </Text>
+        <Text style={styles.content}>{route.params.date} </Text>
         <Text style={styles.text}>Type of Incident: </Text>
         <Text style={styles.content}>placeholder </Text>
         <Text style={styles.text}>DTG: </Text>
