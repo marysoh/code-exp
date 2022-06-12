@@ -25,6 +25,7 @@ import { Ionicons } from '@expo/vector-icons';
 import SettingsScreen from "./screens/SettingsScreen";
 import LogInScreen from "./screens/LogInScreen";
 import AccountStack from "./screens/AccountStack";
+import SettingsStack from "./screens/SettingsStack";
 import { AuthContext } from "./components/context";
 
 const Tab = createBottomTabNavigator();
@@ -141,7 +142,7 @@ export default function App() {
         <Tab.Screen name="Declined Main" component={DeclinedOuterStack} options={{ headerShown: false, title: '', tabBarLabel: 'Declined', tabBarLabelStyle:{fontSize:14}, tabBarIcon: ({ color, size }) => (
           <MaterialCommunityIcons name="sticker-remove-outline" size={24} color={color} />
         )}}/>
-        <Tab.Screen name="Settings Screen" component={SettingsScreen} options={{ title: '', tabBarLabel: 'Settings', tabBarLabelStyle:{fontSize:14}, tabBarIcon: ({ color, size }) => (
+        <Tab.Screen name="Settings Main" component={SettingsStack} options={{ headerShown: false, title: '', tabBarLabel: 'Settings', tabBarLabelStyle:{fontSize:14}, tabBarIcon: ({ color, size }) => (
           <Ionicons name="settings-outline" size={24} color="black" />), 
          }}/>
       </Tab.Navigator>

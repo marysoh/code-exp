@@ -17,13 +17,45 @@ export default function SettingsScreen(){
 
     const {signOut}= useContext(AuthContext);
 
+    const [data, setData] = useState([{
+        email: 'john@gmail.com',
+        password: 'myPassword',
+    }])
+
+    function renderItem({item}){
+        return(
+          <View 
+          style={{
+            padding:10, 
+            borderBottomColor: 'grey', 
+            borderBottomWidth:2,
+            flexDirection: 'row',
+            width: '100%'}}>
+            {/* {console.log(item.title)} */}
+            <Text style={styles.text}>Email: </Text>
+            <Text style={styles.text}>{item.email}</Text>
+          </View>
+          
+        )
+      }
+
     return(
         <View style={styles.container}>
             <View >
-                <TouchableOpacity onPress= {()=> {signOut()}} style={styles.button}>
-                    <Ionicons name="log-out-outline" size={24} color="black" />
-                    <Text style={styles.text}>Log out</Text>
-                </TouchableOpacity>    
+                <View>
+                    <TouchableOpacity onPress= {()=> {signOut()}} style={styles.button}>
+                        <Ionicons name="log-out-outline" size={24} color="black" />
+                        <Text style={styles.buttonText}>Log out</Text>
+                    </TouchableOpacity>    
+                </View>
+                <View>
+                   <FlatList 
+                data={data}
+                renderItem={renderItem}
+                style={{ width: "100%", marginTop: 10 }}/> 
+                </View>
+                
+                    
             </View>
             
         </View>
@@ -41,9 +73,20 @@ const styles = StyleSheet.create({
         marginLeft:10,
         fontSize: 20,
     },
+    buttonText:{
+        paddingLeft:30,
+        marginLeft:10,
+        fontSize: 20,
+    },
     button:{
-        margin:10,
+        marginTop: 120,
+        padding:20,
         flexDirection: "row",
-        justifyContent: "space-between",
+        margin:10,
+        backgroundColor:'#A0B9BF',
+        borderRadius: 50,
+        borderStyle: 'solid',
+        borderWidth:1,
+        borderColor: 'grey',
     },
   });
