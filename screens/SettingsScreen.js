@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
         padding:20,
         flexDirection: "row",
         margin:10,
-        backgroundColor:'#A0B9BF',
+        backgroundColor:'#BCD4DE',
         borderRadius: 50,
         borderStyle: 'solid',
         borderWidth:1,
