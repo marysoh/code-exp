@@ -72,7 +72,7 @@ import DatePicker from "react-native-datepicker";
             </View>
             <View style={styles.contentContainer}>
                 <Text style={styles.text}>Title:</Text>
-                <TextInput placeholder="" onChangeText={onChangeField('title')} style={styles.textInput}/>
+                <TextInput placeholder="Required" onChangeText={onChangeField('title')} style={styles.textInput}/>
                 <Text style={styles.text}>Date and Time of Incident:</Text>
                 <TextInput placeholder="DD/MM/YYYY HHMM" onChangeText={onChangeField('date')} style={styles.textInput}/>
                 <Text style={styles.text}>Enter Report:</Text>

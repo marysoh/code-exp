@@ -13,6 +13,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import React, { useEffect, useState, useContext } from "react";
 import { Feather } from '@expo/vector-icons';
 import { AuthContext } from "../components/context";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 export default function LogInScreen({navigation}){
@@ -70,7 +71,7 @@ export default function LogInScreen({navigation}){
                 <View>
                     <Text style={styles.text}>Enter email:</Text>
                     <View style={styles.actions}>
-                        <Feather name="user" size={24} color="black" />
+                        <MaterialCommunityIcons name="email-outline" size={26} color="black" />
                         <TextInput placeholder="Your email" autoCapitalize="none" style={styles.textInput} onChangeText={(val) => textInputChange(val)}/>
 
                     </View>

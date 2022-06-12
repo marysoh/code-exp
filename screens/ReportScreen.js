@@ -20,6 +20,9 @@ export default function ReportScreen({ navigation }) {
 
   const onSubmit = useCallback((formData) => {
     console.log("in on submit", formData);
+    if(formData.title == 'undefined'){
+      console.log("no title");
+    };
     navigation.navigate("Pending", {
       title: formData.title,
       date: formData.date,
@@ -95,7 +98,7 @@ export default function ReportScreen({ navigation }) {
       <View style={styles.contentContainer}>
         <Text style={styles.text}>Title:</Text>
         <TextInput
-          placeholder=""
+          placeholder="Required"
           onChangeText={onChangeField("title")}
           style={styles.textInput}
         />
