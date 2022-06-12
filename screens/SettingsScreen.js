@@ -9,14 +9,18 @@ import {
 import * as SQLite from "expo-sqlite";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Ionicons } from '@expo/vector-icons';
+import { AuthContext } from "../components/context";
 
 export default function SettingsScreen(){
+
+    const {signOut}= useContext(AuthContext);
+
     return(
         <View style={styles.container}>
             <View >
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity onPress= {()=> {signOut()}} style={styles.button}>
                     <Ionicons name="log-out-outline" size={24} color="black" />
                     <Text style={styles.text}>Log out</Text>
                 </TouchableOpacity>    

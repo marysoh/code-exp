@@ -12,9 +12,11 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import React, { useEffect, useState } from "react";
 import { Feather } from '@expo/vector-icons';
+import { AuthContext } from "../components/context";
 
 
-export default function LogInScreen({navigation}){
+export default function SignUpScreen({navigation}){
+
     const [data, setData] = useState({
         email: '',
         password: '',

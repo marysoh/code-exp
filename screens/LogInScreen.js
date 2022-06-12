@@ -10,11 +10,15 @@ import {
 import * as SQLite from "expo-sqlite";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Feather } from '@expo/vector-icons';
+import { AuthContext } from "../components/context";
 
 
 export default function LogInScreen({navigation}){
+
+    const {signIn} = useContext(AuthContext);
+
     const [data, setData] = useState({
         email: '',
         password: '',
@@ -24,12 +28,17 @@ export default function LogInScreen({navigation}){
     });
 
     const textInputChange = (val) => {
+        
+        console.log("val",val);
         if(val.length !=0){
+            console.log("hi");
             setData({...data, email : val, check_textInputChange: true,});
         }
         else{
-            setData({...data, email : val, check_textInputChange: true,});
+            
+            setData({...data, email : val, check_textInputChange: false,});
         }
+        console.log("hey",data.email);
     }
 
     const handlePasswordChange = (val) => {
@@ -45,6 +54,11 @@ export default function LogInScreen({navigation}){
             secureTextEntry: !data.secureTextEntry,
         });
         console.log(data.secureTextEntry);
+    }
+
+    const loginHandle = (email,password) =>{
+        signIn(email,password);
+
     }
 
     return(
@@ -76,7 +90,7 @@ export default function LogInScreen({navigation}){
                     </View>
                 </View>
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.logInButton}>
+                    <TouchableOpacity onPress={() =>{ loginHandle(data.email, data.password)}} style={styles.logInButton}>
                         <Text style={styles.buttonText}>Log In</Text>
                     </TouchableOpacity>
                 </View>
