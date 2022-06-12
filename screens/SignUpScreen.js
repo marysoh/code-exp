@@ -10,17 +10,22 @@ import {
 import * as SQLite from "expo-sqlite";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Feather } from '@expo/vector-icons';
 import { AuthContext } from "../components/context";
 
 
 export default function SignUpScreen({navigation}){
 
+    const {signUp} = useContext(AuthContext);
+
     const [data, setData] = useState({
         email: '',
         password: '',
         confirm_password: '',
+        confirmed: true,
+        hasEmail:true,
+        hasPassword:true,
         check_textInputChange: false,
         secureTextEntry: true,
         confirm_secureTextEntry: true,
@@ -65,6 +70,25 @@ export default function SignUpScreen({navigation}){
         // console.log(data.confirm_secureTextEntry);
     }
 
+    const signUpHandle = (email,password, confirm_password) =>{
+        console.log("sign up handle");
+        
+        if(password==confirm_password && email.length >0 && password.length>0){
+            setData({...data, confirmed: true, hasEmail: true, hasPassword:true});
+            signUp(email,password);
+        }
+        else if(password!=confirm_password){
+            setData({...data, confirmed: false, hasEmail: true, hasPassword: true});
+        }
+        else if(email.length==0){
+            setData({...data, confirmed: true, hasEmail: false, hasPassword:true});
+        }
+        else if(password.length==0){
+            setData({...data, hasPassword: false, hasEmail:true, confirmed: true});
+        }
+
+    }
+
     return(
         <View style={styles.container}>
             <View style={styles.header}>
@@ -106,11 +130,30 @@ export default function SignUpScreen({navigation}){
                             
                         </TouchableOpacity>
                     </View>
+                    
                 </View>
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.signUpButton}>
+                    <TouchableOpacity onPress={() => { signUpHandle(data.email, data.password, data.confirm_password)}} style={styles.signUpButton}>
                         <Text style={styles.buttonText}>Sign Up</Text>
                     </TouchableOpacity>
+                    {data.confirmed ?
+                        console.log("confirmed") :
+                        <View>
+                            <Text style={{padding:10, color:'red', fontWeight: 'bold'}}>Password does not match</Text>
+                        </View>
+                    }
+                    {data.hasEmail ?
+                        console.log("has email") :
+                        <View>
+                            <Text style={{padding:10, color:'red', fontWeight: 'bold'}}>Please enter an email</Text>
+                        </View>
+                    }
+                    {data.hasPassword ?
+                        console.log("has password") :
+                        <View>
+                            <Text style={{padding:10, color:'red', fontWeight: 'bold'}}>Please enter a password</Text>
+                        </View>
+                    }
                 </View>
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity onPress={() => {navigation.navigate("Log In Screen")}} style={styles.logInButton}>

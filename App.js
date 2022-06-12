@@ -93,8 +93,9 @@ export default function App() {
       dispatch({type:'LOGOUT'});
     },
     signUp: () => {
-      setUserToken('abc');
-      setIsLoading(false);
+      // setUserToken('abc');
+      // setIsLoading(false);
+      dispatch({type: 'REGISTER', token: 'xyz'});
     },
   }), []);
 
@@ -102,7 +103,7 @@ export default function App() {
     setTimeout(() => {
       // setIsLoading(false);
       let userToken;
-      userToken='dcgwui';
+      userToken='dcgwui'; //from storage
       dispatch({type:'RETRIEVE_TOKEN', token: userToken})
     }, 1000)
   }, [])
