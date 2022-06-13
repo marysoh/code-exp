@@ -10,7 +10,6 @@ import * as SQLite from "expo-sqlite";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import React, { useEffect, useState } from "react";
-import { Entypo } from "@expo/vector-icons";
 import { Ionicons } from '@expo/vector-icons'; 
 import ViewReportScreen from './ViewReportScreen';
 
@@ -70,12 +69,9 @@ export default function PendingScreen({ navigation, route }) {
 
     useEffect(()=> 
     {
-        console.log("helloooo");
-        console.log(route);
         if(route.params?.title){
-            console.log("test");
             if(route.params.template)
-            {   const {title, date, template, incident, servicemen,unitCompany, location, description, injury, actions, verbalReport, writtenReport, reportedTime, officer} = route.params;
+            {   const {title, date, template, incident, servicemen, location, description, currentStatus, actions, verbalReport, higherHq, gsoc,aimsis, officer} = route.params;
             
                 const newNote={
                     title: title,
@@ -83,14 +79,14 @@ export default function PendingScreen({ navigation, route }) {
                     template: template,
                     incident: incident,
                     servicemen: servicemen,
-                    unitCompany: unitCompany,
                     location: location,
                     description: description,
-                    injury: injury,
+                    currentStatus: currentStatus,
                     actions: actions,
                     verbalReport: verbalReport,
-                    writtenReport: writtenReport,
-                    reportedTime: reportedTime,
+                    higherHq: higherHq,
+                    gsoc: gsoc,
+                    aimsis:aimsis,
                     officer: officer,
                     status: 'pending',
                     id: notes.length.toString(),
@@ -98,9 +94,7 @@ export default function PendingScreen({ navigation, route }) {
                 setNotes([...notes, newNote]);
             }
             else{
-                console.log("else");
                 const {title, date, template, reportText} = route.params;
-                console.log("try");
                 const newNote={
                     title: title,
                     date: date,
@@ -109,17 +103,14 @@ export default function PendingScreen({ navigation, route }) {
                     status: 'pending',
                     id: notes.length.toString(),
                 };
-                console.log("end else");
                 setNotes([...notes, newNote]);
             }
             
         }
-         console.log(notes);
     }, [route.params?.title])
 
     //This adds the new note button in header
     useEffect(() => {
-      console.log("This effect happened");
       navigation.setOptions({
         headerRight: () => (
           <TouchableOpacity
@@ -132,7 +123,6 @@ export default function PendingScreen({ navigation, route }) {
     });
 
     useEffect(() => {
-        console.log("3This effect happened");
         navigation.setOptions({
           headerLeft: () => (
             <TouchableOpacity
@@ -151,19 +141,18 @@ export default function PendingScreen({ navigation, route }) {
           padding:10, 
           borderBottomColor: 'grey', 
           borderBottomWidth:2}}>
-          {/* {console.log(item.title)} */}
           <TouchableOpacity onPress={()=>{
               if(item.template){
                   navigation.navigate("View Report", {title: item.title, date: item.date, template: item.template, status: item.status, incident: item.incident,
                     servicemen: item.servicemen,
-                    unitCompany: item.unitCompany,
                     location: item.location,
                     description: item.description,
-                    injury: item.injury,
+                    currentStatus: item.currentStatus,
                     actions: item.actions,
                     verbalReport: item.verbalReport,
-                    writtenReport: item.writtenReport,
-                    reportedTime: item.reportedTime,
+                    higherHq: item.higherHq,
+                    gsoc: item.gsoc,
+                    aimsis: item.aimsis,
                     officer: item.officer,});
               }
               else{

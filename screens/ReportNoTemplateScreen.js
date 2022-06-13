@@ -8,6 +8,7 @@ import {
   Button,
   ScrollView,
 } from "react-native";
+// import {AutoGrowingTextInput} from 'react-native-autogrow-textinput';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import React, { useEffect, useState, useCallback } from "react";
@@ -17,6 +18,7 @@ import DatePicker from "react-native-datepicker";
 
   export default function ReportNoTemplateScreen({navigation}){
       const {register, handleSubmit, setValue} = useForm();
+      const [height, setHeight] = useState(10);
 
       const onSubmit = useCallback(
           formData => {
@@ -65,20 +67,26 @@ import DatePicker from "react-native-datepicker";
         // </form>
 
         <ScrollView style= {styles.container}>
-        <Text style={styles.text}>Title:</Text>
-        <TextInput placeholder="" onChangeText={onChangeField('title')} style={styles.textInput}/>
-        <Text style={styles.text}>Date and Time of Incident:</Text>
-        <TextInput placeholder="DD/MM/YYYY HHMM" onChangeText={onChangeField('date')} style={styles.textInput}/>
-        <Text style={styles.text}>Enter Report:</Text>
-        <TextInput placeholder="" onChangeText={onChangeField('reportText')} style={styles.textInput}/>
-        <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>
-                <Text style={styles.buttonText}>Submit</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()} >
-                <Text style={styles.buttonText}>Cancel</Text>
-            </TouchableOpacity>
-        </View>
+            <View style={styles.header}>
+                <Text style={styles.headerText}>Create Report</Text>
+            </View>
+            <View style={styles.contentContainer}>
+                <Text style={styles.text}>Title:</Text>
+                <TextInput placeholder="Required" onChangeText={onChangeField('title')} style={styles.textInput}/>
+                <Text style={styles.text}>Date and Time of Incident:</Text>
+                <TextInput placeholder="DD/MM/YYYY HHMM" onChangeText={onChangeField('date')} style={styles.textInput}/>
+                <Text style={styles.text}>Enter Report:</Text>
+                <TextInput  placeholder="" onChangeText={onChangeField('reportText')} style={styles.textInput} multiline ={true}  />
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>
+                        <Text style={styles.buttonText}>Submit</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()} >
+                        <Text style={styles.buttonText}>Cancel</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        
         
     </ScrollView>
         )
@@ -90,6 +98,20 @@ import DatePicker from "react-native-datepicker";
         marginTop: 40,
         marginBottom: 50,
     },
+    header:{
+        padding:20,
+        backgroundColor: '#A5CCD1',
+        alignItems: 'center',
+      },
+      headerText:{
+        fontSize:25,
+        fontWeight: 'bold',
+      },
+      contentContainer: {
+        marginTop: 10,
+        marginLeft: 10, 
+        marginRight:10,
+      },
     buttonContainer:{
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -97,7 +119,7 @@ import DatePicker from "react-native-datepicker";
     },
     button:{
         fontWeight:'bold',
-        borderStyle:'solid',
+        borderRadius: 10,
         backgroundColor: '#A0B9BF',
         width:'40%',
         height: 40,
@@ -115,9 +137,10 @@ import DatePicker from "react-native-datepicker";
     },
 
     textInput:{
-        borderWidth: 2,
+        borderWidth: 1,
         borderColor: "grey",
         backgroundColor: "#E9E9E9",
+        borderRadius: 5,
         padding: 3,
         marginLeft: 20,
         marginRight: 20,

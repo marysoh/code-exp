@@ -34,7 +34,6 @@ export default function AcceptedScreen({navigation}){
             padding:10, 
             borderBottomColor: 'grey', 
             borderBottomWidth:2}}>
-            {console.log(item)}
             <TouchableOpacity onPress={()=>{
                 if(item.template){
                     navigation.navigate("View Report2", {title: item.title, date: item.date, template: item.template, status: item.status, remarks: item.remarks});
