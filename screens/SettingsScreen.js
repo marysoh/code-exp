@@ -13,14 +13,21 @@ import React, { useEffect, useState, useContext } from "react";
 import { Ionicons } from '@expo/vector-icons';
 import { AuthContext } from "../components/context";
 
+//firebase imports
+import firebase from "firebase/compat";
+import 'firebase/compat/auth';
+
 export default function SettingsScreen(){
-
-    const {signOut}= useContext(AuthContext);
-
+   
+    //need to grab data from firestore auth
     const [data, setData] = useState([{
         email: 'john@gmail.com',
         password: 'myPassword',
     }])
+
+    const onLogOut = () => {
+      firebase.auth().signOut();
+    }
 
     function renderItem({item}){
         return(
@@ -43,7 +50,7 @@ export default function SettingsScreen(){
         <View style={styles.container}>
             <View >
                 <View>
-                    <TouchableOpacity onPress= {()=> {signOut()}} style={styles.button}>
+                    <TouchableOpacity onPress= {()=> onLogOut()} style={styles.button}>
                         <Ionicons name="log-out-outline" size={24} color="black" />
                         <Text style={styles.buttonText}>Log out</Text>
                     </TouchableOpacity>    

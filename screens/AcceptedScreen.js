@@ -6,16 +6,12 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
-import * as SQLite from "expo-sqlite";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import React, { useEffect, useState } from "react";
 import { Entypo } from "@expo/vector-icons";
 
-
-
-
-
+//hard coded accepted screen need to connect firestore to this page to get document via a json
 export default function AcceptedScreen({navigation}){
     const [notes, setNotes] = useState(
         [{title:"Absence of Serviceman",

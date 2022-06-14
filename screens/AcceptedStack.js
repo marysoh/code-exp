@@ -14,6 +14,7 @@ import AcceptedScreen from "./AcceptedScreen";
 
 const InnerStack = createStackNavigator();
 
+//Accepted Header
 export default function AcceptedStack(){
   return(
     <InnerStack.Navigator>

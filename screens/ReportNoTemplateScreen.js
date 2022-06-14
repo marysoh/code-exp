@@ -11,86 +11,139 @@ import {
 // import {AutoGrowingTextInput} from 'react-native-autogrow-textinput';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import React, { useEffect, useState, useCallback } from "react";
+import React, { Component, useEffect, useState, useCallback } from "react";
 import {useForm, Controller} from "react-hook-form";
 import DatePicker from "react-native-datepicker";
+import { db } from "../App";
+import { user } from "../redux/reducers/user";
+import { defineAnimation, event } from "react-native-reanimated";
+
+import firebase from "firebase/compat";
   
+export class ReportNoTemplateScreen extends Component {
+  // const {register, handleSubmit, setValue} = useForm();
+  // const [height, setHeight] = useState(10);
 
-  export default function ReportNoTemplateScreen({navigation}){
-      const {register, handleSubmit, setValue} = useForm();
-      const [height, setHeight] = useState(10);
+  // const onSubmit = useCallback(
+  //     formData => {
+  //         console.log("in on submit", formData);
+  //         navigation.navigate("Pending", {title: formData.title, date: formData.date, template: false, reportText: formData.reportText});
+  //       }, []
+  // )
 
-      const onSubmit = useCallback(
-          formData => {
-              console.log("in on submit", formData);
-              navigation.navigate("Pending", {title: formData.title, date: formData.date, template: false, reportText: formData.reportText});
-            }, []
-      )
+  // const onChangeField = useCallback(
+  //     name => text => 
+  //     {setValue(name, text);}, []
+  // );
 
-      const onChangeField = useCallback(
-          name => text => 
-          {setValue(name, text);}, []
-      );
+  // //to send the data to firebase
+  // const saveReport = (event) => {
+  //   event.preventDefault();
 
-      useEffect(() => {
-          register('title');
-          register('date');
-          register('reportText');
-      }, [register]);
-        
-      
-    // const [text, setText] = useState({
-    //     title: "",
-    //     date: "",
-    //     });
+  //   const elementsArray = [...event.target.elements];
 
-        return(
-        //   <View>
-        //     <Text>Title:</Text>
-        //     <TextInput 
-        //         value= {text.title}
-        //         onChangeText = {(newText) => setText(newText) }/>
-        //     <View style={styles.container}>
-        //         <TouchableOpacity onPress={()=> navigation.navigate("Pending", {text})} style={styles.button}>
-        //             <Text style={styles.buttonText}>Submit</Text>
-        //         </TouchableOpacity>
-        //         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.button}>
-        //             <Text style={styles.buttonText}>Cancel</Text>
-        //         </TouchableOpacity>
-        //     </View>
-        //   </View>
+  //   console.log(elementsArray);
+  // }
 
-        // <form onSubmit={handleSubmit(onSubmit)}>
-        //     <input type="text" placeholder="Title" name="title" {...register('title')} />
-        //     <input type="text" placeholder="Date" name="date" {...register('date')} />
-        //     <input type="submit" />
-        // </form>
+  // useEffect(() => {
+  //     register('title');
+  //     register('date');
+  //     register('reportText');
+  // }, [register]);
 
-        <ScrollView style= {styles.container}>
-            <View style={styles.header}>
-                <Text style={styles.headerText}>Create Report</Text>
-            </View>
-            <View style={styles.contentContainer}>
-                <Text style={styles.text}>Title:</Text>
-                <TextInput placeholder="Required" onChangeText={onChangeField('title')} style={styles.textInput}/>
-                <Text style={styles.text}>Date and Time of Incident:</Text>
-                <TextInput placeholder="DD/MM/YYYY HHMM" onChangeText={onChangeField('date')} style={styles.textInput}/>
-                <Text style={styles.text}>Enter Report:</Text>
-                <TextInput  placeholder="" onChangeText={onChangeField('reportText')} style={styles.textInput} multiline ={true}  />
-                <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>
-                        <Text style={styles.buttonText}>Submit</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()} >
-                        <Text style={styles.buttonText}>Cancel</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        
-        
-    </ScrollView>
-        )
+  // const Users = () => {
+  //   const [loading, setLoading] = useState(true);
+  //   const [users, setUsers] = useState([]);
+
+
+  //   useEffect(() => {
+  //     const getUserFromFirebase = [];
+  //     const subscriber = db
+  //       .collection("users")
+  //       .onSnapshot((querySnapshot) => {
+  //         querySnapshot.forEach((doc) => {
+  //           getUserFromFirebase.push({
+  //             ...doc.data(),
+  //             key: doc.id,
+  //           })
+  //         })
+  //         setUsers(getUserFromFirebase);
+  //         setLoading(false);
+  //       })
+  //     //clean up function
+  //     return () => subscriber();
+  //   }, []);
+
+
+
+  // const [text, setText] = useState({
+  //     title: "",
+  //     date: "",
+  //     });
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+        title: '',
+        ddmmyyyy: '',
+        report: '',
+    }
+
+    this.onSubmit = this.onSubmit.bind(this)
+}
+
+  onSubmit() {
+    const { title, ddmmyyyy, report } = this.state;
+    const res = db.collection("pending")
+      .add({
+        title,
+        ddmmyyyy,
+        report
+      })
+    console.log('report sent', res.id);
+    this.props.navigation.goBack();
   }
+
+  render() {
+    return (
+      <ScrollView style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>Create Report</Text>
+        </View>
+        <View style={styles.contentContainer}>
+          <Text style={styles.text}>Title:</Text>
+          <TextInput placeholder="Required" onChangeText={(title) => this.setState({ title })} style={styles.textInput} />
+          <Text style={styles.text}>Date and Time of Incident:</Text>
+          <TextInput placeholder="DD/MM/YYYY HHMM" onChangeText={(ddmmyyyy) => this.setState({ ddmmyyyy })} style={styles.textInput} />
+          <Text style={styles.text}>Enter Report:</Text>
+          <TextInput placeholder="" onChangeText={(report) => this.setState({ report })} style={styles.textInput} multiline={true} />
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.button} onPress={() => this.onSubmit()}>
+              <Text style={styles.buttonText}>Submit</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.goBack()} >
+              <Text style={styles.buttonText}>Cancel</Text>
+            </TouchableOpacity>
+            {/* <Text>Current User</Text>
+                {users.length > 0 ? (
+                  users.map((user) => <Text key={user.key}>{user.email}</Text>
+                  )) : (
+                  <Text>no users yet</Text>
+                )} */}
+          </View>
+        </View>
+      </ScrollView>
+    )
+  }
+}
+
+//   return (
+//     <Users></Users>
+//     );
+// }
+
+
 
   const styles =StyleSheet.create({
     container:{
@@ -146,3 +199,5 @@ import DatePicker from "react-native-datepicker";
         marginRight: 20,
     }
 })
+
+export default ReportNoTemplateScreen;

@@ -7,103 +7,158 @@ import {
   FlatList,
   TextInput,
 } from "react-native";
-import * as SQLite from "expo-sqlite";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, Component } from "react";
 import { Feather } from '@expo/vector-icons';
 import { AuthContext } from "../components/context";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { render } from "react-dom";
 
+import firebase from "firebase/compat";
+import 'firebase/compat/auth';
 
-export default function LogInScreen({navigation}){
+//mary code
+    // export default function LogInScreen({navigation}){
 
-    const {signIn} = useContext(AuthContext);
+    // const {signIn} = useContext(AuthContext);
 
-    const [data, setData] = useState({
-        email: '',
-        password: '',
-        check_textInputChange: false,
-        secureTextEntry: true,
+    // //hard coded state changes
+    // const [data, setData] = useState({
+    //     email: '',
+    //     password: '',
+    //     check_textInputChange: false,
+    //     secureTextEntry: true,
 
-    });
+    // });
 
-    const textInputChange = (val) => {
+    // //constant for text change using console
+    // const textInputChange = (val) => {
         
-        console.log("val",val);
-        if(val.length !=0){
-            console.log("hi");
-            setData({...data, email : val, check_textInputChange: true,});
-        }
-        else{
+    //     console.log("val",val);
+    //     if(val.length !=0){
+    //         console.log("hi");
+    //         setData({...data, email : val, check_textInputChange: true,});
+    //     }
+    //     else{
             
-            setData({...data, email : val, check_textInputChange: false,});
+    //         setData({...data, email : val, check_textInputChange: false,});
+    //     }
+    //     console.log("hey",data.email);
+    // }
+
+    // //similar to above
+    // const handlePasswordChange = (val) => {
+    //     setData({
+    //         ...data,
+    //         password: val,
+    //     })
+    // }
+
+    // //secure function
+    // const updateSecureTextEntry = () =>{
+    //     setData({
+    //         ...data,
+    //         secureTextEntry: !data.secureTextEntry,
+    //     });
+    //     console.log(data.secureTextEntry);
+    // }
+
+    // //hardcoded login
+    // const loginHandle = (email,password) =>{
+    //     signIn(email,password);
+
+    // }
+
+    //Screen
+
+//andre code
+export class LogInScreen extends Component {
+    constructor(props) { //constructor for the component
+        super(props);
+    
+        this.state = {
+            email: '',
+            password: ''
         }
-        console.log("hey",data.email);
+
+        this.onLogIn = this.onLogIn.bind(this) //accessing 'this' variable
     }
 
-    const handlePasswordChange = (val) => {
-        setData({
-            ...data,
-            password: val,
-        })
+    onLogIn() {
+        const { email, password } = this.state;
+        firebase.auth().signInWithEmailAndPassword(email, password)
+            .then((result) => {
+                console.log(result)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
-    const updateSecureTextEntry = () =>{
-        setData({
-            ...data,
-            secureTextEntry: !data.secureTextEntry,
-        });
-        console.log(data.secureTextEntry);
-    }
+    // //function for navigation to work
+    // function GoToButton({ }) {
+        
+    // }
 
-    const loginHandle = (email,password) =>{
-        signIn(email,password);
-
-    }
-
-    return(
-        <View style = {styles.container}>
-            <View style={styles.header}>
-              <Text style= {styles.headerText}>Log In</Text>  
-            </View>
-            <View style={styles.footer}>
-                <View>
-                    <Text style={styles.text}>Enter email:</Text>
-                    <View style={styles.actions}>
-                        <MaterialCommunityIcons name="email-outline" size={26} color="black" />
-                        <TextInput placeholder="Your email" autoCapitalize="none" style={styles.textInput} onChangeText={(val) => textInputChange(val)}/>
-
-                    </View>
+    render() {
+        return (
+            <View style={styles.container}>
+                <View style={styles.header}>
+                    <Text style={styles.headerText}>Log In</Text>
                 </View>
-                <View>
-                    <Text style={styles.text}>Enter password:</Text>
-                    <View style={styles.actions}>
-                    <Feather name="lock" size={24} color="black" />
-                        <TextInput secureTextEntry={data.secureTextEntry} placeholder="Your password" autoCapitalize="none" style={styles.passwordInput} onChangeText={(val) => handlePasswordChange(val)}/>
-                        <TouchableOpacity onPress={updateSecureTextEntry}>
-                            {data.secureTextEntry ?
-                                <Feather name="eye-off" size={24} color="grey"/> :
-                                <Feather name="eye" size={24} color="grey" />
-                            }
-                            
+                <View style={styles.footer}>
+                    <View>
+                        <Text style={styles.text}>Enter email:</Text>
+                        <View style={styles.actions}>
+                            <MaterialCommunityIcons name="email-outline" size={26} color="black" />
+                            <TextInput 
+                                placeholder="Your email" 
+                                autoCapitalize="none" 
+                                style={styles.textInput} 
+                                onChangeText={(email) => this.setState({ email })}
+                            />
+                        </View>
+                    </View>
+                    <View>
+                        <Text style={styles.text}>Enter password:</Text>
+                        <View style={styles.actions}>
+                            <Feather name="lock" size={24} color="black" />
+                            <TextInput 
+                                secureTextEntry= {true}
+                                placeholder="Your password" 
+                                autoCapitalize="none" 
+                                style={styles.passwordInput} 
+                                onChangeText={(password) => this.setState({ password })}
+                            />
+                            <TouchableOpacity 
+                                // onPress={updateSecureTextEntry}
+                            >
+                                {/* {data.secureTextEntry ?
+                                    <Feather name="eye-off" size={24} color="grey" /> :
+                                    <Feather name="eye" size={24} color="grey" />
+                                } */}
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity onPress={() => this.onLogIn()} style={styles.logInButton}>
+                            <Text style={styles.buttonText}>Log In</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.buttonContainer}>
+                        {/* navigation is not working...  works after adding this.props*/}
+                        <TouchableOpacity 
+                            style={styles.signUpButton}
+                            onPress = {() => this.props.navigation.navigate("Sign Up Screen")}
+                        >
+                            <Text style={styles.buttonText}>Sign Up</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
-                <View style={styles.buttonContainer}>
-                    <TouchableOpacity onPress={() =>{ loginHandle(data.email, data.password)}} style={styles.logInButton}>
-                        <Text style={styles.buttonText}>Log In</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.buttonContainer}>
-                    <TouchableOpacity onPress={() => {navigation.navigate("Sign Up Screen")}} style={styles.signUpButton}>
-                        <Text style={styles.buttonText}>Sign Up</Text>
-                    </TouchableOpacity>
-                </View>
             </View>
-            
-        </View>
-    );
+        )
+    }
 }
 
 const styles = StyleSheet.create({
@@ -192,5 +247,7 @@ const styles = StyleSheet.create({
         marginRight:10,
     },
   });
+
+export default LogInScreen
 
 

@@ -70,26 +70,6 @@ export default function ReportScreen({ navigation }) {
   //     });
 
   return (
-    //   <View>
-    //     <Text>Title:</Text>
-    //     <TextInput
-    //         value= {text.title}
-    //         onChangeText = {(newText) => setText(newText) }/>
-    //     <View style={styles.container}>
-    //         <TouchableOpacity onPress={()=> navigation.navigate("Pending", {text})} style={styles.button}>
-    //             <Text style={styles.buttonText}>Submit</Text>
-    //         </TouchableOpacity>
-    //         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.button}>
-    //             <Text style={styles.buttonText}>Cancel</Text>
-    //         </TouchableOpacity>
-    //     </View>
-    //   </View>
-
-    // <form onSubmit={handleSubmit(onSubmit)}>
-    //     <input type="text" placeholder="Title" name="title" {...register('title')} />
-    //     <input type="text" placeholder="Date" name="date" {...register('date')} />
-    //     <input type="submit" />
-    // </form>
 
     <ScrollView style={styles.container}>
       <View style={styles.header}>
