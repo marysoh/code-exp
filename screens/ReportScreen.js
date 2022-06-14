@@ -15,177 +15,227 @@ import { useForm, Controller } from "react-hook-form";
 import DatePicker from "react-native-datepicker";
 import { Entypo } from "@expo/vector-icons";
 
-export default function ReportScreen({ navigation }) {
-  const { register, handleSubmit, setValue } = useForm();
+import firebase from "firebase/compat";
+import { Component } from "react/cjs/react.production.min";
+import { db } from "../App";
 
-  const onSubmit = useCallback((formData) => {
-    console.log("in on submit", formData);
-    if(formData.title == 'undefined'){
-      console.log("no title");
-    };
-    navigation.navigate("Pending", {
-      title: formData.title,
-      date: formData.date,
-      template: true,
-      incident: formData.incident,
-      servicemen: formData.servicemen,
-      location: formData.location,
-      description: formData.description,
-      currentStatus: formData.currentStatus,
-      actions: formData.actions,
-      verbalReport: formData.verbalReport,
-      higherHq: formData.higherHq,
-      gsoc: formData.gsoc,
-      aimsis: formData.aimsis,
-      officer: formData.officer,
-    });
-  }, []);
+export class ReportScreen extends Component {
+  // const { register, handleSubmit, setValue } = useForm();
 
-  const onChangeField = useCallback(
-    (name) => (text) => {
-      setValue(name, text);
-    },
-    []
-  );
+  // const onSubmit = useCallback((formData) => {
+  //   console.log("in on submit", formData);
+  //   if(formData.title == 'undefined'){
+  //     console.log("no title");
+  //   };
+  //   navigation.navigate("Pending", {
+  //     title: formData.title,
+  //     date: formData.date,
+  //     template: true,
+  //     incident: formData.incident,
+  //     servicemen: formData.servicemen,
+  //     location: formData.location,
+  //     description: formData.description,
+  //     currentStatus: formData.currentStatus,
+  //     actions: formData.actions,
+  //     verbalReport: formData.verbalReport,
+  //     higherHq: formData.higherHq,
+  //     gsoc: formData.gsoc,
+  //     aimsis: formData.aimsis,
+  //     officer: formData.officer,
+  //   });
+  // }, []);
 
-  useEffect(() => {
-    register("title");
-    register("date");
-    register("incident");
-    register("servicemen");
-    register("location");
-    register("description");
-    register("currentStatus");
-    register("actions");
-    register("verbalReport");
-    register("higherHq");
-    register("gsoc");
-    register("aimsis");
-    register("officer");
-  }, [register]);
+  // const onChangeField = useCallback(
+  //   (name) => (text) => {
+  //     setValue(name, text);
+  //   },
+  //   []
+  // );
+
+  // useEffect(() => {
+  //   register("title");
+  //   register("date");
+  //   register("incident");
+  //   register("servicemen");
+  //   register("location");
+  //   register("description");
+  //   register("currentStatus");
+  //   register("actions");
+  //   register("verbalReport");
+  //   register("higherHq");
+  //   register("gsoc");
+  //   register("aimsis");
+  //   register("officer");
+  // }, [register]);
 
   // const [text, setText] = useState({
   //     title: "",
   //     date: "",
   //     });
+  constructor(props) {
+    super(props);
 
-  return (
+    this.state = {
+      title: '',
+      ddmmyyyy: '',
+      incident: '',
+      servicemen: '',
+      location: '',
+      description: '',
+      currentStatus: '',
+      actions: '',
+      verbalReport: '',
+      higherHq: '',
+      gsoc: '',
+      aimsis: '',
+      officer: ''
+    }
 
-    <ScrollView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Create Report</Text>
-      </View>
-      <View style={styles.contentContainer}>
-        <Text style={styles.text}>Title:</Text>
-        <TextInput
-          placeholder="Required"
-          onChangeText={onChangeField("title")}
-          style={styles.textInput}
-        />
-        <Text style={styles.text}>Date and Time of Incident:</Text>
-        <TextInput
-          placeholder="DD/MM/YYYY HHMM HRS"
-          onChangeText={onChangeField("date")}
-          style={styles.textInput}
-          placeholderTextColor="grey"
-        />
-        <Text style={styles.text}>Nature and Type of Incident:</Text>
-        <TextInput
-          placeholder="Non-Training/Training Related"
-          onChangeText={onChangeField("incident")}
-          style={styles.textInput}
-        />
-        <Text style={styles.text}>Details of Personnel involved:</Text>
-        <TextInput
-          placeholder="Rank, Masked NRIC, Unit/Sub-Unit"
-          onChangeText={onChangeField("servicemen")}
-          style={styles.textInput}
-          multiline={true}
-        />
-        <Text style={styles.text}>Location of Incident:</Text>
-        <TextInput
-          placeholder=""
-          onChangeText={onChangeField("location")}
-          style={styles.textInput}
-          multiline={true}
-        />
-        <Text style={styles.text}>Brief Description:</Text>
-        <TextInput
-          placeholder=""
-          onChangeText={onChangeField("description")}
-          style={styles.textInput}
-          multiline={true}
-        />
-        <Text style={styles.text}>Current Status:</Text>
-        <TextInput
-          placeholder="Including injury/damages"
-          onChangeText={onChangeField("currentStatus")}
-          style={styles.textInput}
-          multiline={true}
-        />
-        <Text style={styles.text}>Follow-up Actions:</Text>
-        <TextInput
-          placeholder=""
-          onChangeText={onChangeField("actions")}
-          style={styles.textInput}
-          multiline={true}
-        />
-        <Text style={styles.text}>HHQ/GSOC informed? If yes, include date and time.</Text>
-        <Text style={styles.text}>Verbal Report:</Text>
-        <TextInput
-          placeholder=""
-          onChangeText={onChangeField("verbalReport")}
-          style={styles.textInput}
-          multiline={true}
-        />
-        <Text style={styles.text}>
-          Higher HQ/Unit:
-        </Text>
-        <TextInput
-          placeholder=""
-          onChangeText={onChangeField("higherHq")}
-          style={styles.textInput}
-          multiline={true}
-        />
-        <Text style={styles.text}>GSOC:</Text>
-        <TextInput
-          placeholder=""
-          onChangeText={onChangeField("gsoc")}
-          style={styles.textInput}
-          multiline={true}
-        />
-        <Text style={styles.text}>AIMSIS Report:</Text>
-        <TextInput
-          placeholder=""
-          onChangeText={onChangeField("aimsis")}
-          style={styles.textInput}
-          multiline={true}
-        />
-        <Text style={styles.text}>Reported By:</Text>
-        <TextInput
-          placeholder="Rank, Name, HP"
-          onChangeText={onChangeField("officer")}
-          style={styles.textInput}
-          multiline={true}
-        />
-      </View>
+    this.onSubmit = this.onSubmit.bind(this);
+  }
 
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={handleSubmit(onSubmit)}
-        >
-          <Text style={styles.buttonText}>Submit</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.goBack()}
-        >
-          <Text style={styles.buttonText}>Cancel</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
-  );
+  onSubmit() {
+    const { title, ddmmyyyy, incident, servicemen, location, description, currentStatus, actions, verbalReport, higherHq, gsoc, aimsis, officer } = this.state;
+    const res = db.collection("pending")
+      .add({
+        title,
+        ddmmyyyy,
+        incident,
+        servicemen,
+        location,
+        description,
+        currentStatus,
+        actions,
+        verbalReport,
+        higherHq,
+        gsoc,
+        aimsis,
+        officer,
+      })
+    console.log('report sent', res.id);
+    this.props.navigation.goBack();
+  }
+
+
+  render() {
+    return (
+
+      <ScrollView style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>Create Report</Text>
+        </View>
+        <View style={styles.contentContainer}>
+          <Text style={styles.text}>Title:</Text>
+          <TextInput
+            placeholder="Required"
+            onChangeText={(title) => this.setState({ title })}
+            style={styles.textInput}
+          />
+          <Text style={styles.text}>Date and Time of Incident:</Text>
+          <TextInput
+            placeholder="DD/MM/YYYY HHMM HRS"
+            onChangeText={(ddmmyyyy) => this.setState({ ddmmyyyy })}
+            style={styles.textInput}
+            placeholderTextColor="grey"
+          />
+          <Text style={styles.text}>Nature and Type of Incident:</Text>
+          <TextInput
+            placeholder="Non-Training/Training Related"
+            onChangeText={(incident) => this.setState({ incident })}
+            style={styles.textInput}
+          />
+          <Text style={styles.text}>Details of Personnel involved:</Text>
+          <TextInput
+            placeholder="Rank, Masked NRIC, Unit/Sub-Unit"
+            onChangeText={(servicemen) => this.setState({ servicemen })}
+            style={styles.textInput}
+            multiline={true}
+          />
+          <Text style={styles.text}>Location of Incident:</Text>
+          <TextInput
+            placeholder=""
+            onChangeText={(location) => this.setState({ location })}
+            style={styles.textInput}
+            multiline={true}
+          />
+          <Text style={styles.text}>Brief Description:</Text>
+          <TextInput
+            placeholder=""
+            onChangeText={(description) => this.setState({ description })}
+            style={styles.textInput}
+            multiline={true}
+          />
+          <Text style={styles.text}>Current Status:</Text>
+          <TextInput
+            placeholder="Including injury/damages"
+            onChangeText={(currentStatus) => this.setState({ currentStatus })}
+            style={styles.textInput}
+            multiline={true}
+          />
+          <Text style={styles.text}>Follow-up Actions:</Text>
+          <TextInput
+            placeholder=""
+            onChangeText={(actions) => this.setState({ actions })}
+            style={styles.textInput}
+            multiline={true}
+          />
+          <Text style={styles.text}>HHQ/GSOC informed? If yes, include date and time.</Text>
+          <Text style={styles.text}>Verbal Report:</Text>
+          <TextInput
+            placeholder=""
+            onChangeText={(verbalReport) => this.setState({ verbalReport })}
+            style={styles.textInput}
+            multiline={true}
+          />
+          <Text style={styles.text}>
+            Higher HQ/Unit:
+          </Text>
+          <TextInput
+            placeholder=""
+            onChangeText={(higherHq) => this.setState({ higherHq })}
+            style={styles.textInput}
+            multiline={true}
+          />
+          <Text style={styles.text}>GSOC:</Text>
+          <TextInput
+            placeholder=""
+            onChangeText={(gsoc) => this.setState({ gsoc })}
+            style={styles.textInput}
+            multiline={true}
+          />
+          <Text style={styles.text}>AIMSIS Report:</Text>
+          <TextInput
+            placeholder=""
+            onChangeText={(aimsis) => this.setState({ aimsis })}
+            style={styles.textInput}
+            multiline={true}
+          />
+          <Text style={styles.text}>Reported By:</Text>
+          <TextInput
+            placeholder="Rank, Name, HP"
+            onChangeText={(officer) => this.setState({ officer })}
+            style={styles.textInput}
+            multiline={true}
+          />
+        </View>
+
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => this.onSubmit()}
+          >
+            <Text style={styles.buttonText}>Submit</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => this.props.navigation.goBack()}
+          >
+            <Text style={styles.buttonText}>Cancel</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -243,3 +293,5 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
 });
+
+export default ReportScreen;
