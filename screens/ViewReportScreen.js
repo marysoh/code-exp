@@ -13,6 +13,10 @@ import { createStackNavigator } from "@react-navigation/stack";
 import React, { useEffect, useState } from "react";
 import { Entypo } from "@expo/vector-icons";
 
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import { db } from "../App";
+
 export default function ViewReportScreen({ navigation, route }) {
   function withTemplate() {
     const {
@@ -57,6 +61,56 @@ export default function ViewReportScreen({ navigation, route }) {
     );
   }
 
+function Accept() {
+  // const { title, date, incident, servicemen, location, description, currentStatus, actions, verbalReport, higherHq, gsoc, aimsis, officer, template } = route.params;
+  // const res = db.collection("accpeted")
+  //   .add({
+  //     title,
+  //     date,
+  //     template,
+  //     incident,
+  //     servicemen,
+  //     location,
+  //     reportText: description,
+  //     description,
+  //     currentStatus,
+  //     actions,
+  //     verbalReport,
+  //     higherHq,
+  //     gsoc,
+  //     aimsis,
+  //     officer,
+  //     status: 'pending'
+  //   })
+  console.log('report accepted');
+  navigation.goBack();
+}
+
+  function Reject() {
+  // const { title, date, incident, servicemen, location, description, currentStatus, actions, verbalReport, higherHq, gsoc, aimsis, officer, template } = route.params;
+  // const res = db.collection("rejected")
+  //   .add({
+  //     title,
+  //     date,
+  //     template,
+  //     incident,
+  //     servicemen,
+  //     location,
+  //     reportText: description,
+  //     description,
+  //     currentStatus,
+  //     actions,
+  //     verbalReport,
+  //     higherHq,
+  //     gsoc,
+  //     aimsis,
+  //     officer,
+  //     status: 'pending'
+  //   })
+  console.log('report rejected');
+  navigation.goBack();
+  }
+
   function withoutTemplate() {
     return (
       <View>
@@ -99,14 +153,45 @@ export default function ViewReportScreen({ navigation, route }) {
     }
   }
 
+  let user = firebase.auth().currentUser;
+
+  if(user.email == 'spring@mary.com')
   return (
     <ScrollView style={styles.container}>
       {console.log(route)}
-      {console.log(route.params.ddmmyyyy)}
+      {console.log('Approving Officer')}
+      {console.log(route.params.date)}
       <Text style={styles.text}>Title: </Text>
       <Text style={styles.content}>{route.params.title} </Text>
       <Text style={styles.text}>Date and Time of Incident: </Text>
-      <Text style={styles.content}>{route.params.ddmmyyyy} </Text>
+      <Text style={styles.content}>{route.params.date} </Text>
+      {goToFormat()}
+      {remarks()}
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity onPress={() => Accept()} style={styles.button}>
+          <Text style={styles.buttonText}>Accept</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => Reject()} style={styles.button}>
+          <Text style={styles.buttonText}>Reject</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.button}>
+          <Text style={styles.buttonText}>Go Back</Text>
+        </TouchableOpacity>
+      </View>
+      
+    </ScrollView>
+  );
+
+
+  return (
+    <ScrollView style={styles.container}>
+      {console.log(route)}
+      {console.log('Commander')}
+      {console.log(route.params.date)}
+      <Text style={styles.text}>Title: </Text>
+      <Text style={styles.content}>{route.params.title} </Text>
+      <Text style={styles.text}>Date and Time of Incident: </Text>
+      <Text style={styles.content}>{route.params.date} </Text>
       {goToFormat()}
       {remarks()}
       <View style={styles.buttonContainer}>
@@ -114,7 +199,6 @@ export default function ViewReportScreen({ navigation, route }) {
           <Text style={styles.buttonText}>Go Back</Text>
         </TouchableOpacity>
       </View>
-      
     </ScrollView>
   );
 }
