@@ -77,7 +77,7 @@ export class ReportScreen extends Component {
 
     this.state = {
       title: '',
-      ddmmyyyy: '',
+      date: '',
       incident: '',
       servicemen: '',
       location: '',
@@ -95,14 +95,16 @@ export class ReportScreen extends Component {
   }
 
   onSubmit() {
-    const { title, ddmmyyyy, incident, servicemen, location, description, currentStatus, actions, verbalReport, higherHq, gsoc, aimsis, officer } = this.state;
+    const { title, date, incident, servicemen, location, description, currentStatus, actions, verbalReport, higherHq, gsoc, aimsis, officer } = this.state;
     const res = db.collection("pending")
       .add({
         title,
-        ddmmyyyy,
+        date,
+        template: true,
         incident,
         servicemen,
         location,
+        reportText: description,
         description,
         currentStatus,
         actions,
@@ -111,6 +113,7 @@ export class ReportScreen extends Component {
         gsoc,
         aimsis,
         officer,
+        status: 'pending'
       })
     console.log('report sent', res.id);
     this.props.navigation.goBack();
@@ -134,7 +137,7 @@ export class ReportScreen extends Component {
           <Text style={styles.text}>Date and Time of Incident:</Text>
           <TextInput
             placeholder="DD/MM/YYYY HHMM HRS"
-            onChangeText={(ddmmyyyy) => this.setState({ ddmmyyyy })}
+            onChangeText={(date) => this.setState({ date })}
             style={styles.textInput}
             placeholderTextColor="grey"
           />

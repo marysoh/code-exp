@@ -86,20 +86,22 @@ export class ReportNoTemplateScreen extends Component {
 
     this.state = {
         title: '',
-        ddmmyyyy: '',
-        report: '',
+        date: '',
+        reportText: '',
     }
 
     this.onSubmit = this.onSubmit.bind(this)
 }
 
   onSubmit() {
-    const { title, ddmmyyyy, report } = this.state;
+    const { title, date, reportText } = this.state;
     const res = db.collection("pending")
       .add({
         title,
-        ddmmyyyy,
-        report
+        date,
+        reportText,
+        template: false,
+        status: 'pending'
       })
     console.log('report sent', res.id);
     this.props.navigation.goBack();
@@ -115,9 +117,9 @@ export class ReportNoTemplateScreen extends Component {
           <Text style={styles.text}>Title:</Text>
           <TextInput placeholder="Required" onChangeText={(title) => this.setState({ title })} style={styles.textInput} />
           <Text style={styles.text}>Date and Time of Incident:</Text>
-          <TextInput placeholder="DD/MM/YYYY HHMM" onChangeText={(ddmmyyyy) => this.setState({ ddmmyyyy })} style={styles.textInput} />
+          <TextInput placeholder="DD/MM/YYYY HHMM" onChangeText={(date) => this.setState({ date })} style={styles.textInput} />
           <Text style={styles.text}>Enter Report:</Text>
-          <TextInput placeholder="" onChangeText={(report) => this.setState({ report })} style={styles.textInput} multiline={true} />
+          <TextInput placeholder="" onChangeText={(reportText) => this.setState({ reportText })} style={styles.textInput} multiline={true} />
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.button} onPress={() => this.onSubmit()}>
               <Text style={styles.buttonText}>Submit</Text>
@@ -125,12 +127,7 @@ export class ReportNoTemplateScreen extends Component {
             <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.goBack()} >
               <Text style={styles.buttonText}>Cancel</Text>
             </TouchableOpacity>
-            {/* <Text>Current User</Text>
-                {users.length > 0 ? (
-                  users.map((user) => <Text key={user.key}>{user.email}</Text>
-                  )) : (
-                  <Text>no users yet</Text>
-                )} */}
+
           </View>
         </View>
       </ScrollView>

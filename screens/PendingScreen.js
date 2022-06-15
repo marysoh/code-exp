@@ -13,47 +13,13 @@ import React, { useEffect, useState } from "react";
 import { Ionicons } from '@expo/vector-icons'; 
 import ViewReportScreen from './ViewReportScreen';
 
+import firebase from 'firebase/compat/app';
+import { db } from "../App";
+
 //const db = SQLite.openDatabase("notes.db");
 //will look for this db in the phone, if dont have it will create it
 
 export default function PendingScreen({ navigation, route }) {
-    //create state variable for our notes
-    const [notes, setNotes] = useState([]);
-    
-    // function refreshNotes(){
-    //     console.log("refreshing");
-    //     db.transaction((tx)=>{
-    //         tx.executeSql(
-    //             "SELECT * FROM notes",
-    //             null,
-    //             (txObj, {rows:{_array}}) => setNotes(_array),
-    //             (txObj, error) => console.log("Error", error),
-    //         )
-    //     });
-    // }
-
-    // useEffect(() => {
-    //     if(route.params?.text){
-    //         db.transaction((tx) => {
-    //             tx.executeSql(
-    //                 "INSERT INTO notes (done, title) VALUES (0, ?)", [route.params.text]
-    //             )
-    //         }), null, refreshNotes
-    //     }
-    // })
-    // useEffect(()=> {
-    //     db.transaction((tx) => {
-    //         tx.executeSql(
-    //             `CREATE TABLE IF NOT EXISTS
-    //             notes
-    //             (id INTEGER PRIMARY KEY AUTOINCREMENT,
-    //             title TEXT,
-    //             done INT
-    //             );`
-    //         );
-    //     }, null, refreshNotes)
-    // }, []);
-    // first param is if table doesnt exist, 2nd is if it fails, third is if it passes
 
     function addTemplateReport() {
       navigation.navigate("Report Template");
@@ -67,47 +33,72 @@ export default function PendingScreen({ navigation, route }) {
         navigation.navigate("View Report");
     }
 
-    useEffect(()=> 
-    {
-        if(route.params?.title){
-            if(route.params.template)
-            {   const {title, date, template, incident, servicemen, location, description, currentStatus, actions, verbalReport, higherHq, gsoc,aimsis, officer} = route.params;
+    const [notes, setNotes] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    const pendings = useState([]);
+
+    useEffect(() => {
+      const getPendingFromFirebase = [];
+      const subscriber = db
+        .collection("pending")
+        .onSnapshot((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            getPendingFromFirebase.push({
+              ...doc.data(),
+              key: doc.id,
+            })
+          })
+          console.log(getPendingFromFirebase);
+          setNotes(getPendingFromFirebase);
+          setLoading(false);
+        })
+      
+      return () => subscriber();
+    }, [])
+
+    
+    // useEffect(()=> 
+    // {
+    //     if(route.params?.title){
+    //         if(route.params.template)
+    //         {   const {title, ddmmyyyy, template, incident, servicemen, location, description, currentStatus, actions, verbalReport, higherHq, gsoc,aimsis, officer} = route.params;
             
-                const newNote={
-                    title: title,
-                    date: date,
-                    template: template,
-                    incident: incident,
-                    servicemen: servicemen,
-                    location: location,
-                    description: description,
-                    currentStatus: currentStatus,
-                    actions: actions,
-                    verbalReport: verbalReport,
-                    higherHq: higherHq,
-                    gsoc: gsoc,
-                    aimsis:aimsis,
-                    officer: officer,
-                    status: 'pending',
-                    id: notes.length.toString(),
-                };
-                setNotes([...notes, newNote]);
-            }
-            else{
-                const {title, date, template, reportText} = route.params;
-                const newNote={
-                    title: title,
-                    date: date,
-                    template: template,
-                    reportText: reportText,
-                    status: 'pending',
-                    id: notes.length.toString(),
-                };
-                setNotes([...notes, newNote]);
-            }
+    //             const newNote={
+    //                 title: title,
+    //                 date: ddmmyyyy,
+    //                 template: template,
+    //                 incident: incident,
+    //                 servicemen: servicemen,
+    //                 location: location,
+    //                 description: description,
+    //                 currentStatus: currentStatus,
+    //                 actions: actions,
+    //                 verbalReport: verbalReport,
+    //                 higherHq: higherHq,
+    //                 gsoc: gsoc,
+    //                 aimsis:aimsis,
+    //                 officer: officer,
+    //                 status: 'pending',
+    //                 id: notes.length.toString(),
+    //             };
+    //             setNotes([...notes, newNote]);
+    //         }
+    //         else{
+    //             const {title, date, template, reportText} = route.params;
+    //             const newNote={
+    //                 title: title,
+    //                 date: date,
+    //                 template: template,
+    //                 reportText: reportText,
+    //                 status: 'pending',
+    //                 id: notes.length.toString(),
+    //             };
+    //             setNotes([...notes, newNote]);
+    //         }
             
-        }
-    }, [route.params?.title])
+    //     }
+    // }, [route.params?.title])
 
     //This adds the new note button in header
     useEffect(() => {
@@ -133,7 +124,8 @@ export default function PendingScreen({ navigation, route }) {
           ),
         });
       });
-  
+ 
+    //makes the tabs menu
     function renderItem({item}){
       return(
         <View 
@@ -167,6 +159,11 @@ export default function PendingScreen({ navigation, route }) {
         
       )
     }
+
+    function refreshPage() {
+      window.location.reload(false);
+    }
+
     return (
       <View style={styles.container}>
         <FlatList
@@ -177,6 +174,7 @@ export default function PendingScreen({ navigation, route }) {
       </View>
     );
   }
+
 
   const styles = StyleSheet.create({
     container: {

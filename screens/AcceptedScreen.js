@@ -11,16 +11,41 @@ import { createStackNavigator } from "@react-navigation/stack";
 import React, { useEffect, useState } from "react";
 import { Entypo } from "@expo/vector-icons";
 
+import firebase from "firebase/compat";
+import { db } from "../App";
+
 //hard coded accepted screen need to connect firestore to this page to get document via a json
 export default function AcceptedScreen({navigation}){
-    const [notes, setNotes] = useState(
-        [{title:"Absence of Serviceman",
-        date: "12/03/2022",
-        template: false,
-        status:'accepted',
-        remarks: 'NIL',
-        reportText: "Full report",
-},]);
+//     const [notes, setNotes] = useState(
+//         [{title:"Absence of Serviceman",
+//         date: "12/03/2022",
+//         template: false,
+//         status:'accepted',
+//         remarks: 'NIL',
+//         reportText: "Full report",
+// },]);
+
+  const [notes, setNotes] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getAcceptedFromFirebase = [];
+    const subscriber = db
+      .collection("accpeted")
+      .onSnapshot((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          getAcceptedFromFirebase.push({
+            ...doc.data(),
+            key: doc.id,
+          })
+        })
+        console.log(getAcceptedFromFirebase);
+        setNotes(getAcceptedFromFirebase);
+        setLoading(false);
+      })
+
+    return () => subscriber();
+  }, [])
 
 
     function renderItem({item}){
