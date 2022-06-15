@@ -11,20 +11,44 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import React, { useEffect, useState } from "react";
 import { Entypo } from "@expo/vector-icons";
+import { db } from "../App";
 
 
 
 
 
 export default function DeclinedScreen({navigation}){
-    const [notes, setNotes] = useState(
-        [{title:"incident",
-        date: "12/03/2022",
-        template: false,
-        status: 'declined',
-        remarks: 'Need more info',
-        reportText: "Full report",
-},]);
+//     const [notes, setNotes] = useState(
+//         [{title:"incident",
+//         date: "12/03/2022",
+//         template: false,
+//         status: 'declined',
+//         remarks: 'Need more info',
+//         reportText: "Full report",
+// },]);
+
+  const [notes, setNotes] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getRejectedFromFirebase = [];
+    const subscriber = db
+      .collection("rejected")
+      .onSnapshot((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          getRejectedFromFirebase.push({
+            ...doc.data(),
+            key: doc.id,
+          })
+        })
+        console.log(getRejectedFromFirebase);
+        setNotes(getRejectedFromFirebase);
+        setLoading(false);
+      })
+
+    return () => subscriber();
+  }, [])
+
     function viewReport(){
         console.log("hiii");
         navigation.navigate("View Report3");

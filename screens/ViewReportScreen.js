@@ -102,11 +102,11 @@ export default function ViewReportScreen({ navigation, route }) {
   return (
     <ScrollView style={styles.container}>
       {console.log(route)}
-      {console.log(route.params.date)}
+      {console.log(route.params.ddmmyyyy)}
       <Text style={styles.text}>Title: </Text>
       <Text style={styles.content}>{route.params.title} </Text>
       <Text style={styles.text}>Date and Time of Incident: </Text>
-      <Text style={styles.content}>{route.params.date} </Text>
+      <Text style={styles.content}>{route.params.ddmmyyyy} </Text>
       {goToFormat()}
       {remarks()}
       <View style={styles.buttonContainer}>

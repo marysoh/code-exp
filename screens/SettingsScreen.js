@@ -21,7 +21,7 @@ export default function SettingsScreen(){
    
     //need to grab data from firestore auth
     const [data, setData] = useState([{
-        email: 'john@gmail.com',
+        email: firebase.auth().currentUser.email,
         password: 'myPassword',
     }])
 
